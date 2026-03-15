@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS 241 – Operating Systems Quiz</title>
+<meta property="og:title" content="CS 241 – Operating Systems Quiz">
+<meta property="og:description" content="9 Lectures · Multiple Choice & True/False · Capital University — Dr. Ahmed Hesham Mostafa">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0f172a;--ink-soft:#334155;--ink-muted:#64748b;--paper:#f8fafc;--paper-warm:#f1f5f9;--paper-card:#ffffff;--accent:#2563eb;--accent-light:#dbeafe;--accent-deep:#1d4ed8;--gold:#d97706;--gold-light:#fef3c7;--success:#15803d;--success-light:#dcfce7;--danger:#b91c1c;--danger-light:#fee2e2;--border:#e2e8f0;--border-strong:#cbd5e1;--shadow-sm:0 1px 3px rgba(15,23,42,0.06);--shadow-md:0 4px 16px rgba(15,23,42,0.10);--shadow-lg:0 12px 40px rgba(15,23,42,0.14);--radius:10px;--radius-sm:6px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;line-height:1.6;}
+
+/* HERO */
+.hero{background:var(--ink);color:white;padding:56px 40px 48px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 85% 50%,rgba(37,99,235,0.22) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 10% 80%,rgba(217,119,6,0.14) 0%,transparent 60%);}
+.hero-inner{max-width:960px;margin:0 auto;position:relative;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#60a5fa;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:#60a5fa;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(26px,5vw,44px);line-height:1.15;margin-bottom:8px;color:#fff;}
+.hero-title em{font-style:italic;color:#93c5fd;}
+.hero-sub{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px;font-weight:300;}
+
+/* LECTURE NAV TABS */
+.lecture-nav{background:white;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm);}
+.lecture-nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;}
+.lecture-nav-inner::-webkit-scrollbar{display:none;}
+.lec-tab{padding:14px 18px;font-size:13px;font-weight:500;color:var(--ink-muted);cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s;flex-shrink:0;}
+.lec-tab:hover{color:var(--ink);background:var(--paper-warm);}
+.lec-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* PROGRESS */
+.progress-wrap{background:white;border-bottom:1px solid var(--border);padding:10px 40px;}
+.progress-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:16px;}
+.progress-text{font-size:12px;font-weight:500;color:var(--ink-muted);white-space:nowrap;min-width:130px;}
+.progress-track{flex:1;height:5px;background:var(--paper-warm);border-radius:99px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%;}
+.progress-pct{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);font-weight:500;min-width:32px;text-align:right;}
+
+/* MAIN */
+.main{max-width:960px;margin:0 auto;padding:40px 40px 80px;}
+
+/* LECTURE SECTION */
+.lec-section{display:none;}
+.lec-section.active{display:block;}
+.lec-header{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.lec-num{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;}
+.lec-title{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);}
+.lec-stats{display:flex;gap:20px;margin-top:12px;flex-wrap:wrap;}
+.lec-stat{font-size:12px;color:var(--ink-muted);background:var(--paper-warm);padding:4px 10px;border-radius:4px;border:1px solid var(--border);}
+
+/* SECTION HEADER */
+.section-header{display:flex;align-items:center;gap:14px;margin:32px 0 20px;}
+.section-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;flex-shrink:0;}
+.section-icon.mc{background:var(--accent-light);color:var(--accent);}
+.section-icon.tf{background:var(--gold-light);color:var(--gold);}
+.section-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);}
+.section-meta{font-size:12px;color:var(--ink-muted);margin-top:1px;}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:12px;box-shadow:var(--shadow-sm);transition:box-shadow .2s,border-color .2s;}
+.q-card:hover{box-shadow:var(--shadow-md);}
+.q-card.answered{border-color:var(--border-strong);}
+.q-card.correct-card{border-color:#86efac;background:#f0fdf4;}
+.q-card.wrong-card{border-color:#fca5a5;background:#fff5f5;}
+.q-header{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;}
+.q-badge{background:var(--paper-warm);color:var(--ink-muted);font-family:'DM Mono',monospace;font-size:11px;font-weight:500;padding:3px 8px;border-radius:4px;border:1px solid var(--border);flex-shrink:0;margin-top:2px;}
+.q-text{font-size:14px;color:var(--ink);line-height:1.65;}
+
+/* OPTIONS */
+.options{display:flex;flex-direction:column;gap:7px;}
+.option{display:flex;align-items:flex-start;gap:12px;padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;position:relative;}
+.option:hover{border-color:var(--accent);background:var(--accent-light);}
+.option input[type=radio]{display:none;}
+.option-dot{width:17px;height:17px;border:1.5px solid var(--border-strong);border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.option-dot::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--success);opacity:0;transition:opacity .15s;}
+.option.selected .option-dot{border-color:var(--accent);background:var(--accent-light);}
+.option.selected .option-dot::after{opacity:1;}
+.option.selected{border-color:var(--accent);background:var(--accent-light);}
+.option-letter{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--ink-muted);margin-top:2px;flex-shrink:0;min-width:14px;}
+.option-text{font-size:13.5px;color:var(--ink-soft);line-height:1.5;}
+.option.correct-opt{border-color:var(--success);background:var(--success-light);}
+.option.correct-opt .option-text{color:var(--success);}
+.option.correct-opt .option-letter{color:var(--success);}
+.option.correct-opt .option-dot{border-color:var(--success);background:var(--success-light);}
+.option.correct-opt:not(.selected) .option-dot::after{opacity:0;}
+.option.correct-opt.selected .option-dot::after{opacity:1;background:var(--success);}
+.option.wrong-opt{border-color:var(--gold);background:var(--gold-light);}
+.option.wrong-opt .option-text{color:#92400e;}
+.option.wrong-opt .option-letter{color:#92400e;}
+.option.wrong-opt .option-dot{border-color:var(--gold);background:var(--gold-light);}
+.option.wrong-opt .option-dot::after{opacity:1;background:var(--gold);}
+
+/* T/F */
+.tf-wrap{display:flex;gap:10px;margin-top:4px;}
+.tf-btn{flex:1;padding:10px 0;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.tf-btn:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.tf-btn.selected{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.tf-btn.correct-tf{border-color:var(--success);background:var(--success-light);color:var(--success);}
+.tf-btn.wrong-tf{border-color:var(--gold);background:var(--gold-light);color:#92400e;}
+.tf-dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5;}
+
+/* FEEDBACK */
+.q-feedback{display:none;margin-top:9px;font-size:12px;font-weight:500;padding:5px 11px;border-radius:4px;width:fit-content;}
+.q-feedback.show-correct{display:block;background:var(--success-light);color:var(--success);}
+.q-feedback.show-wrong{display:block;background:var(--danger-light);color:var(--danger);}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:36px 0;}
+
+/* SCORE */
+.score-card{display:none;background:var(--ink);color:white;border-radius:var(--radius);padding:28px 32px;margin-top:32px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);}
+.score-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 90% 50%,rgba(37,99,235,0.22) 0%,transparent 65%);}
+.score-card-inner{position:relative;}
+.score-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:24px;}
+.score-label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.45);margin-bottom:5px;font-family:'DM Mono',monospace;}
+.score-big{font-family:'DM Serif Display',serif;font-size:50px;line-height:1;color:white;}
+.score-sub{font-size:13px;color:rgba(255,255,255,.55);margin-top:3px;}
+.score-grade{font-family:'DM Serif Display',serif;font-size:38px;color:#fbbf24;line-height:1;}
+.score-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
+.score-section{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-sm);padding:12px 14px;}
+.score-section-label{font-size:10px;color:rgba(255,255,255,.4);margin-bottom:3px;text-transform:uppercase;letter-spacing:.1em;}
+.score-section-val{font-family:'DM Serif Display',serif;font-size:20px;color:white;}
+.score-section-pct{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px;}
+
+/* ACTIONS */
+.actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;}
+.btn-primary{background:var(--accent);color:white;border:none;padding:12px 28px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s;box-shadow:0 2px 8px rgba(37,99,235,.25);}
+.btn-primary:hover{background:var(--accent-deep);transform:translateY(-1px);}
+.btn-secondary{background:white;color:var(--ink-soft);border:1.5px solid var(--border-strong);padding:12px 24px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;}
+.btn-secondary:hover{border-color:var(--ink-soft);color:var(--ink);background:var(--paper-warm);}
+
+/* SCROLL TOP */
+.scroll-top{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--ink);color:white;border:none;border-radius:50%;font-size:17px;cursor:pointer;box-shadow:var(--shadow-md);opacity:0;transition:opacity .3s;z-index:200;display:flex;align-items:center;justify-content:center;}
+.scroll-top.visible{opacity:1;}
+.scroll-top:hover{background:var(--accent);}
+
+@media(max-width:600px){.hero{padding:32px 18px 28px;}.main{padding:20px 18px 60px;}.lecture-nav-inner{padding:0 8px;}.lec-tab{padding:12px 12px;font-size:12px;}.progress-wrap{padding:10px 18px;}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Capital University — Computer Science Department</div>
+    <h1 class="hero-title">CS 241 — <em>Operating Systems</em></h1>
+    <p class="hero-sub">Dr. Ahmed Hesham Mostafa &nbsp;·&nbsp; Lectures 0 – 8 &nbsp;·&nbsp; Multiple Choice & True / False</p>
+  </div>
+</header>
+
+<nav class="lecture-nav">
+  <div class="lecture-nav-inner" id="lec-tabs"></div>
+</nav>
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-text" id="prog-text">0 answered</span>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+    <span class="progress-pct" id="prog-pct">0%</span>
+  </div>
+</div>
+
+<main class="main" id="main-content"></main>
+
+<button class="scroll-top" id="scroll-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const letters = ['a','b','c','d','e'];
+
+const lectures = [
+  {
+    id: 0,
+    title: "Course Introduction & Plan",
+    mc: [
+      {q:"What is an Operating System?",opts:["Software that acts as an interface between hardware components and the user","A programming language used to write applications","A type of computer hardware","A network protocol"],ans:0},
+      {q:"Which company implemented the first OS in the early 1950s?",opts:["Microsoft","IBM","General Motors Research Lab","Apple"],ans:2},
+      {q:"In what year was the first version of Unix OS developed?",opts:["Late 1950s","Early 1960s","Late 1960s","Early 1980s"],ans:2},
+      {q:"MS-DOS was built by Microsoft in which year?",opts:["1975","1981","1985","1990"],ans:1},
+      {q:"Windows first came into existence in which year when a GUI was created and paired with MS-DOS?",opts:["1981","1983","1985","1990"],ans:2},
+      {q:"In the mid-1960s, operating systems started to use what?",opts:["Networks","Disks","Virtual memory","Threads"],ans:1},
+      {q:"What does OS stand for?",opts:["Open Software","Operating System","Output Service","Original Software"],ans:1},
+    ],
+    tf: [
+      {q:"An Operating System acts as an interface between computer hardware and the user.",ans:true},
+      {q:"Every computer system must have at least one operating system to run other programs.",ans:true},
+      {q:"MS-DOS was the first OS built by Apple.",ans:false},
+      {q:"The first version of Unix was developed in the early 1950s.",ans:false},
+      {q:"Windows first appeared in 1985 when a GUI was paired with MS-DOS.",ans:true},
+      {q:"It is possible for a user to use a mobile device without an operating system.",ans:false},
+    ]
+  },
+  {
+    id: 1,
+    title: "Introduction & OS Components",
+    mc: [
+      {q:"Which of the following is NOT one of the three main goals of an operating system?",opts:["Execute user programs","Make the computer system convenient to use","Use the computer hardware efficiently","Compile source code into machine code"],ans:3},
+      {q:"What does PCB stand for?",opts:["Process Control Block","Program Counter Buffer","Primary Cache Block","Process Communication Bus"],ans:0},
+      {q:"Which OS component is responsible for recognizing CLI commands like cd, mkdir, cls?",opts:["I/O Management","Process Management","Command Interpreter System Management","Security Management"],ans:2},
+      {q:"Which of the following is a User Mode component of the OS?",opts:["Process Management","Memory Management","I/O Management","File System Management"],ans:2},
+      {q:"Which of the following is a Kernel Mode component of the OS?",opts:["I/O Management","Command Interpreter System","Process Management","Graphical Interface"],ans:2},
+      {q:"What is the technique used to prevent multiple processes from accessing the same resource simultaneously called?",opts:["Deadlock","Process Synchronization","Context Switching","Scheduling"],ans:1},
+      {q:"What is Deadlock?",opts:["When a process runs too fast","When multiple processes wait for each other to release resources and none proceeds","When the OS crashes","When memory is full"],ans:1},
+      {q:"Which disk scheduling algorithm is mentioned as managed by the OS?",opts:["Round Robin","Priority Scheduling","FCFS (First Come First Serve)","Multilevel Queue"],ans:2},
+      {q:"What type of error does the OS throw when a C program tries to access memory that doesn't belong to it?",opts:["Null Pointer Exception","Stack Overflow","Segmentation Fault","Memory Leak"],ans:2},
+      {q:"What does DMA stand for in the context of computer system organization?",opts:["Dynamic Memory Allocation","Direct Memory Access","Data Management Architecture","Disk Memory Access"],ans:1},
+      {q:"Which of the following best describes Process Management scheduling?",opts:["Getting processes from new state into ready queue for CPU","Writing processes to disk","Sending processes over network","Compressing process memory"],ans:0},
+      {q:"Which technique does OS use to handle deadlocks via Semaphores?",opts:["Process Synchronization","Memory Compaction","Context Switching","Disk Scheduling"],ans:0},
+      {q:"What are the two views of OS components?",opts:["Hardware View and Software View","User View and Kernel View","Input View and Output View","Static View and Dynamic View"],ans:1},
+      {q:"Memory Deallocation in OS refers to:",opts:["Allocating more memory to a process","Freeing memory when a process completes execution","Copying memory from disk to RAM","Encrypting memory blocks"],ans:1},
+      {q:"What does SSTF stand for in disk scheduling?",opts:["Shortest Seek Time First","Sequential Sector Transfer First","System Storage Task First","Single Sector Transfer Frequency"],ans:0},
+    ],
+    tf: [
+      {q:"PCB stands for Process Control Block.",ans:true},
+      {q:"The Command Interpreter System Management component belongs to Kernel Mode.",ans:false},
+      {q:"Process Management includes scheduling, IPC, concurrency, and deadlock handling.",ans:true},
+      {q:"In process synchronization, the OS uses techniques like Semaphores.",ans:true},
+      {q:"Security management in the OS only operates at the user level.",ans:false},
+      {q:"A Segmentation Fault error is thrown when a program accesses memory outside its allocated space.",ans:true},
+      {q:"The OS allows process 1 to access memory blocks assigned to process 2.",ans:false},
+      {q:"File formatting means applying different data structures on disk to store files.",ans:true},
+      {q:"Fragmentation occurs when leftover storage blocks in a frame cannot be used for larger data.",ans:true},
+      {q:"NTFS and FAT32 are examples of file systems.",ans:true},
+    ]
+  },
+  {
+    id: 2,
+    title: "OS Technology Concepts",
+    mc: [
+      {q:"What does BIOS stand for?",opts:["Basic Input/Output System","Binary Input Output Software","Boot Initialization Operating System","Base Input Output Structure"],ans:0},
+      {q:"BIOS is typically stored in which type of memory?",opts:["RAM","EPROM","SSD","Cache"],ans:1},
+      {q:"What replaced BIOS in the early 21st century?",opts:["MBR","GRUB","UEFI","NTLDR"],ans:2},
+      {q:"What does POST stand for in the context of BIOS?",opts:["Power-On Self Test","Primary Output System Test","Process Operating System Test","Pre-OS Start Test"],ans:0},
+      {q:"How many bytes does the MBR consist of?",opts:["256","512","1024","2048"],ans:1},
+      {q:"What does MBR stand for?",opts:["Master Boot Record","Main Binary Register","Memory Boot Routine","Multiple Boot Record"],ans:0},
+      {q:"EEPROM stands for:",opts:["Extended Erasable Programmable Read-Only Memory","Electrically-Erasable Programmable ROM","Enhanced External Peripheral ROM","Electronic Erasable Permanent Read-Only Memory"],ans:1},
+      {q:"GNU GRUB is an example of a:",opts:["File System","Bootloader","Partition Table","Kernel"],ans:1},
+      {q:"What is NTLDR?",opts:["A type of RAM","NT Loader for Windows NT operating system","A disk partition tool","A network protocol"],ans:1},
+      {q:"Which partition style supports a maximum of 128 partitions using GPT?",opts:["Basic Disk with MBR","Dynamic Disk","Basic Disk with GPT","Spanned Volume"],ans:2},
+      {q:"Mirroring (RAID-1) means:",opts:["Data is striped across two or more disks","Data is duplicated on two physical disks for redundancy","Data is spread across three or more disks with parity","Data is stored in a single volume"],ans:1},
+      {q:"Striping (RAID-0) is also known as:",opts:["Mirrored Volume","Spanned Volume","Striped Volume","RAID-5 Volume"],ans:2},
+      {q:"What does GPT stand for?",opts:["General Partition Table","GUID Partition Table","Global Program Table","Graphics Processing Terminal"],ans:1},
+      {q:"A Primary Partition is the only partition that can be set:",opts:["Logical","Extended","Active","Dynamic"],ans:2},
+      {q:"What does UEFI store its initialization information in?",opts:["MBR","EPROM","An .efi file on the EFI System Partition","NTLDR"],ans:2},
+    ],
+    tf: [
+      {q:"BIOS stands for Basic Input/Output System.",ans:true},
+      {q:"UEFI replaced BIOS in the early 21st century.",ans:true},
+      {q:"The MBR contains the first 1024 bytes of the hard drive.",ans:false},
+      {q:"BIOS still works in 16-bit mode.",ans:true},
+      {q:"A RAID-5 volume requires at least three disks.",ans:true},
+      {q:"A mirrored volume can be extended.",ans:false},
+      {q:"Named pipes require a parent-child relationship between processes.",ans:false},
+      {q:"FAT32 and NTFS are examples of file systems.",ans:true},
+      {q:"EEPROM stands for Electrically-Erasable Programmable ROM.",ans:true},
+      {q:"Dynamic disks support unlimited number of partitions.",ans:true},
+    ]
+  },
+  {
+    id: 3,
+    title: "Processes",
+    mc: [
+      {q:"What is a process?",opts:["A program stored on disk","A program in execution","A file in memory","A hardware component"],ans:1},
+      {q:"Which section of a process in memory contains global variables?",opts:["Stack","Heap","Text","Data section"],ans:3},
+      {q:"Which section contains memory dynamically allocated during runtime?",opts:["Stack","Text","Heap","Data"],ans:2},
+      {q:"Which of the following is NOT a valid process state?",opts:["New","Running","Sleeping","Terminated"],ans:2},
+      {q:"What does PCB stand for in this context?",opts:["Process Control Block","Program Cache Buffer","Parallel Computing Bus","Primary Code Block"],ans:0},
+      {q:"Which UNIX system call creates a new process?",opts:["exec()","wait()","fork()","abort()"],ans:2},
+      {q:"Which system call replaces the process memory space with a new program after fork()?",opts:["wait()","abort()","exec()","kill()"],ans:2},
+      {q:"What is cascading termination?",opts:["Terminating only the parent process","Terminating all children and grandchildren when a parent terminates","Restarting all processes","Killing idle processes"],ans:1},
+      {q:"What are the two models of Inter-Process Communication (IPC)?",opts:["Pipes and Sockets","Shared Memory and Message Passing","Direct and Indirect","Synchronous and Asynchronous"],ans:1},
+      {q:"In the Producer-Consumer problem with a bounded buffer, what happens when all buffers are full?",opts:["Consumer waits","Producer waits","Both wait","Buffer expands"],ans:1},
+      {q:"What is a context switch?",opts:["Changing the OS kernel","Saving the current process state and restoring another process state","Switching between user and kernel mode","Changing memory allocation"],ans:1},
+      {q:"In direct communication, processes must:",opts:["Use a mailbox","Name each other explicitly","Use a shared file","Use sockets"],ans:1},
+      {q:"In indirect communication, messages are directed to and from:",opts:["Processes directly","Mailboxes/Ports","Shared memory","Network sockets"],ans:1},
+      {q:"Which buffering type requires sender to always wait for receiver (rendezvous)?",opts:["Unbounded capacity","Bounded capacity","Zero capacity","Fixed capacity"],ans:2},
+      {q:"What is the purpose of the Program Counter in a PCB?",opts:["Store the process priority","Indicate the address of the next instruction to execute","Count the number of CPU cycles","Track open files"],ans:1},
+      {q:"Ordinary pipes in UNIX are:",opts:["Bidirectional","Named","Unidirectional","Network-capable"],ans:2},
+      {q:"Named Pipes differ from Ordinary Pipes because:",opts:["They are unidirectional","They require parent-child relationship","They are bidirectional and no parent-child relationship needed","They only work on Windows"],ans:2},
+      {q:"What is the 'Waiting' state of a process?",opts:["Process is being created","Process is waiting for an event to occur","Process is waiting to be assigned to a processor","Process has finished execution"],ans:1},
+      {q:"What does the ready queue contain?",opts:["Processes waiting for I/O","All processes in main memory ready to execute","Terminated processes","Processes being swapped to disk"],ans:1},
+      {q:"A socket is defined as:",opts:["A hardware port","An endpoint for communication","A type of pipe","A shared memory segment"],ans:1},
+    ],
+    tf: [
+      {q:"A program is an active entity while a process is a passive entity stored on disk.",ans:false},
+      {q:"The stack section of a process contains temporary data like function parameters and return addresses.",ans:true},
+      {q:"One program can result in several processes.",ans:true},
+      {q:"The fork() system call in UNIX creates a new process.",ans:true},
+      {q:"Context switch time is considered useful productive work for the system.",ans:false},
+      {q:"In IPC Shared Memory, communication is under control of the operating system.",ans:false},
+      {q:"Zero capacity buffering means the sender must wait for the receiver (rendezvous).",ans:true},
+      {q:"Ordinary pipes can be accessed from outside the process that created them.",ans:false},
+      {q:"Named pipes can be used without a parent-child relationship.",ans:true},
+      {q:"The loopback IP address 127.0.0.1 refers to the system on which the process is running.",ans:true},
+    ]
+  },
+  {
+    id: 4,
+    title: "Threads & Concurrency",
+    mc: [
+      {q:"What is the main advantage of using threads over creating new processes?",opts:["Threads have more memory","Thread creation is lighter-weight than process creation","Threads run on separate CPUs","Threads are more secure"],ans:1},
+      {q:"Which of the following is NOT a benefit of multithreading?",opts:["Responsiveness","Resource Sharing","Economy","Increased memory usage per task"],ans:3},
+      {q:"Amdahl's Law is used to calculate:",opts:["Memory usage in multithreading","Potential performance gains from adding more processing cores","Network throughput","Disk I/O speed"],ans:1},
+      {q:"In the Many-to-One thread model:",opts:["Each user thread maps to one kernel thread","Many user threads map to a single kernel thread","Many kernel threads map to one user thread","All threads map to all cores"],ans:1},
+      {q:"Which thread model provides the most concurrency?",opts:["Many-to-One","One-to-One","Many-to-Many","None-to-Many"],ans:1},
+      {q:"Which operating systems use the One-to-One thread model?",opts:["Only macOS","Windows and Linux","Only Android","Only iOS"],ans:1},
+      {q:"Data parallelism means:",opts:["Each thread performs a unique operation","Distributing subsets of the same data across multiple cores","Sending data over a network","Using shared memory between processes"],ans:1},
+      {q:"Task parallelism means:",opts:["Distributing threads across cores, each performing unique operations","Running the same operation on multiple data sets","Using a single thread for all tasks","Splitting one task into identical sub-tasks"],ans:0},
+      {q:"Which of the following is a primary thread library?",opts:["OpenMP","POSIX Pthreads","MPI","CUDA"],ans:1},
+      {q:"If an application is 75% parallel and 25% serial running on 2 cores, what is the speedup according to Amdahl's Law?",opts:["1.0","1.6","2.0","2.28"],ans:1},
+      {q:"Concurrency means:",opts:["Multiple tasks running simultaneously on multiple cores","More than one task making progress on a single core","Tasks running without interruption","All tasks completing at the same time"],ans:1},
+      {q:"Which model allows the OS to create a sufficient number of kernel threads dynamically?",opts:["Many-to-One","One-to-One","Many-to-Many","One-to-Many"],ans:2},
+    ],
+    tf: [
+      {q:"Thread creation is heavier-weight than process creation.",ans:false},
+      {q:"In the Many-to-One model, one thread blocking causes all threads to block.",ans:true},
+      {q:"The One-to-One model provides more concurrency than the Many-to-One model.",ans:true},
+      {q:"Parallelism and concurrency mean the same thing.",ans:false},
+      {q:"POSIX Pthreads is a user-level thread library.",ans:true},
+      {q:"Amdahl's Law shows that performance gains are unlimited when adding more cores.",ans:false},
+      {q:"Data parallelism distributes the same data subset to each core performing the same operation.",ans:true},
+      {q:"Kernel threads are managed by user-level thread libraries.",ans:false},
+      {q:"The Many-to-Many model is the most commonly used model today.",ans:false},
+      {q:"Economy is one of the benefits of multithreading because thread switching has lower overhead than context switching.",ans:true},
+    ]
+  },
+  {
+    id: 5,
+    title: "CPU Scheduling",
+    mc: [
+      {q:"What is Burst Time?",opts:["Time a process waits in ready queue","Time required by a process to complete execution","Time from arrival to completion","Time for a context switch"],ans:1},
+      {q:"Turnaround Time is calculated as:",opts:["Burst Time + Waiting Time","Completion Time – Arrival Time","Completion Time – Burst Time","Arrival Time + Burst Time"],ans:1},
+      {q:"Waiting Time is calculated as:",opts:["Completion Time – Arrival Time","Burst Time + Arrival Time","Turnaround Time – Burst Time","Response Time – Burst Time"],ans:2},
+      {q:"Which scheduling algorithm is considered optimal for minimum average waiting time?",opts:["FCFS","Round Robin","SJF (Shortest Job First)","Priority Scheduling"],ans:2},
+      {q:"What is the Convoy Effect in FCFS?",opts:["Short processes run before long ones","Short processes get stuck behind long processes","Processes run in reverse order","All processes have equal waiting time"],ans:1},
+      {q:"In Round Robin scheduling, what happens after a process uses its time quantum?",opts:["It terminates","It is moved to wait queue","It is preempted and added to end of ready queue","It gets a higher priority"],ans:2},
+      {q:"What is Starvation in priority scheduling?",opts:["A process consuming too much memory","Low priority processes may never execute","A process blocked on I/O","CPU being idle"],ans:1},
+      {q:"What is Aging in priority scheduling?",opts:["Decreasing priority over time","Increasing priority of processes as time progresses","Removing old processes","Resetting priorities to zero"],ans:1},
+      {q:"The Dispatcher is responsible for:",opts:["Choosing which process to run next","Giving control of the CPU to the selected process","Managing memory allocation","Handling I/O requests"],ans:1},
+      {q:"Dispatch latency is:",opts:["Time for a process to complete","Time to stop one process and start another","Time for a context switch to complete memory operations","Time between two I/O bursts"],ans:1},
+      {q:"In FCFS with P1=24, P2=3, P3=3 arriving in order P1,P2,P3, what is the average waiting time?",opts:["3","17","27","9"],ans:1},
+      {q:"SRTF (Shortest Remaining Time First) is the preemptive version of which algorithm?",opts:["FCFS","Round Robin","Priority Scheduling","SJF"],ans:3},
+      {q:"Which scheduling criterion should be minimized?",opts:["CPU utilization","Throughput","Turnaround time","None of the above"],ans:2},
+      {q:"If q is very large in Round Robin scheduling, it behaves like:",opts:["SJF","Priority Scheduling","FCFS","SRTF"],ans:2},
+      {q:"Response Time is calculated as:",opts:["Completion Time – Arrival Time","Time when process first gets CPU – Arrival Time","Burst Time – Waiting Time","Turnaround Time – Burst Time"],ans:1},
+    ],
+    tf: [
+      {q:"SJF scheduling is optimal as it gives minimum average waiting time.",ans:true},
+      {q:"FCFS is a preemptive scheduling algorithm.",ans:false},
+      {q:"Turnaround Time equals Burst Time plus Waiting Time.",ans:true},
+      {q:"Starvation can be solved using Aging.",ans:true},
+      {q:"In Round Robin, if time quantum q is very small, it behaves like FCFS.",ans:false},
+      {q:"The Dispatcher is the module that selects which process runs next from the ready queue.",ans:false},
+      {q:"Preemptive scheduling can result in race conditions when data is shared among processes.",ans:true},
+      {q:"Nonpreemptive scheduling: once CPU is allocated, the process keeps it until it terminates or waits.",ans:true},
+      {q:"Throughput should be maximized in CPU scheduling.",ans:true},
+      {q:"Response time should be maximized in CPU scheduling criteria.",ans:false},
+    ]
+  },
+  {
+    id: 6,
+    title: "Memory Management Part 1",
+    mc: [
+      {q:"What is the job of the Memory Manager?",opts:["Manage CPU scheduling","Track memory usage, allocate/deallocate memory, manage swapping","Handle file system operations","Control device drivers"],ans:1},
+      {q:"Monoprogramming without Swapping or Paging means:",opts:["Multiple programs run at the same time","Only one program runs at a time sharing memory with OS","Programs are swapped between disk and RAM","Virtual memory is used"],ans:1},
+      {q:"What is the Relocation Problem?",opts:["Programs using wrong file paths","Programs referencing absolute addresses that change when loaded at different locations","Memory being full","Programs crashing due to bugs"],ans:1},
+      {q:"Base and Limit Registers solve which two problems?",opts:["Fragmentation and Deadlock","Relocation and Protection","Swapping and Paging","Scheduling and I/O"],ans:1},
+      {q:"What does the Base Register contain when a process runs?",opts:["The length of the program","The physical address where the program begins in memory","The process priority","The page table address"],ans:1},
+      {q:"What does the Limit Register contain?",opts:["The starting address of the program","The length/size of the program","The base address","The page frame number"],ans:1},
+      {q:"What is MFT?",opts:["Memory Fragmentation Technique","Multiprogramming with a Fixed number of Tasks","Main Frame Technology","Memory Fault Trap"],ans:1},
+      {q:"In Multiprogramming with Fixed Partitions, what happens to space in a partition not used by a job?",opts:["It is given to another job","It is swapped to disk","It is wasted while that job runs","It becomes a hole"],ans:2},
+      {q:"Static Relocation means:",opts:["Programs are loaded at fixed addresses always","Adding a constant to every address as the program loads","Dynamically adjusting addresses at runtime","Using virtual memory"],ans:1},
+      {q:"What is the PSW in the context of IBM 360 memory protection?",opts:["Page Size Word","Program Status Word","Process State Write","Primary Storage Word"],ans:1},
+      {q:"What is the main disadvantage of using base and limit registers?",opts:["They require too much memory","Addition and comparison must be performed on every memory reference","They do not support multiple processes","They are not supported by modern hardware"],ans:1},
+      {q:"In early computers without memory abstraction, programs could:",opts:["Use virtual memory","Access only their own memory","Access any physical memory address","Only run one at a time with protection"],ans:2},
+    ],
+    tf: [
+      {q:"In Monoprogramming, two programs can run simultaneously in memory.",ans:false},
+      {q:"Base and Limit registers solve both the relocation and protection problems.",ans:true},
+      {q:"The Limit Register holds the physical starting address of the program in memory.",ans:false},
+      {q:"MFT stands for Multiprogramming with a Fixed number of Tasks.",ans:true},
+      {q:"Static relocation adds a constant to every program address during the load process.",ans:true},
+      {q:"In early computers without memory abstraction, two programs could safely run simultaneously.",ans:false},
+      {q:"IBM 360 divided memory into 2-KB blocks and assigned a 4-bit protection code to each.",ans:true},
+      {q:"The PSW stands for Program Status Word.",ans:true},
+      {q:"Memory managers in most systems reside in the kernel.",ans:true},
+      {q:"Fixed partitions waste no memory since jobs always fill their partition completely.",ans:false},
+    ]
+  },
+  {
+    id: 7,
+    title: "Memory Management Part 2",
+    mc: [
+      {q:"What are the two general approaches to dealing with memory overload?",opts:["Paging and Segmentation","Swapping and Virtual Memory","Compaction and Fragmentation","Bitmap and Linked List"],ans:1},
+      {q:"What is Swapping?",opts:["Dividing memory into pages","Bringing a process entirely into memory, running it, then putting it back on disk","Mapping virtual addresses to physical addresses","Dividing memory into fixed partitions"],ans:1},
+      {q:"What is Memory Compaction?",opts:["Dividing memory into pages","Combining all holes by moving all processes downward","Swapping processes to disk","Using a bitmap to track memory"],ans:1},
+      {q:"Why is memory compaction usually not done?",opts:["It is too complex to implement","It requires a lot of CPU time","It is not supported by modern OS","It increases fragmentation"],ans:1},
+      {q:"In the First-Fit memory allocation algorithm, the memory manager:",opts:["Searches the entire list for the smallest hole","Takes the largest available hole","Scans until it finds the first hole big enough","Starts searching from where it left off last time"],ans:2},
+      {q:"What is the difference between First-Fit and Next-Fit?",opts:["Next-Fit always takes the smallest hole","Next-Fit starts searching from where it left off last time","Next-Fit takes the largest hole","Next-Fit searches the entire list"],ans:1},
+      {q:"Best-Fit algorithm searches for:",opts:["The largest hole","The first hole big enough","The smallest hole that is adequate","A hole exactly equal to the process size"],ans:2},
+      {q:"Which allocation algorithm is considered worst in terms of storage utilization?",opts:["First-Fit","Best-Fit","Next-Fit","Worst-Fit"],ans:3},
+      {q:"External Fragmentation occurs when:",opts:["A process uses more memory than allocated","There is enough total memory but available spaces are not contiguous","The page table is too large","A process swaps too frequently"],ans:1},
+      {q:"What solution does paging provide for external fragmentation?",opts:["It compacts memory holes","It allows noncontiguous allocation of physical memory","It increases physical memory size","It eliminates the need for page tables"],ans:1},
+      {q:"In memory management with bitmaps, what does a 0 bit indicate?",opts:["The unit is occupied","The unit is free","A page fault has occurred","The unit is protected"],ans:1},
+      {q:"What is the main problem with bitmap memory management?",opts:["Bitmaps use too much memory","Searching for a run of k consecutive 0 bits is slow","Bitmaps cannot track large memory","Bitmaps require special hardware"],ans:1},
+    ],
+    tf: [
+      {q:"Swapping involves bringing the entire process into memory before running it.",ans:true},
+      {q:"Memory compaction is frequently performed because it is fast and cheap.",ans:false},
+      {q:"First-Fit is generally faster than Best-Fit.",ans:true},
+      {q:"Worst-Fit has better storage utilization than First-Fit and Best-Fit.",ans:false},
+      {q:"External fragmentation is when available spaces are not contiguous despite having enough total free memory.",ans:true},
+      {q:"In a bitmap, a bit value of 1 means the allocation unit is free.",ans:false},
+      {q:"Best-Fit searches the entire memory list every time it is called.",ans:true},
+      {q:"Virtual memory allows programs to run even when only partially in main memory.",ans:true},
+      {q:"Next-Fit always starts searching from the beginning of the memory list.",ans:false},
+      {q:"Paging solves external fragmentation by allowing noncontiguous memory allocation.",ans:true},
+    ]
+  },
+  {
+    id: 8,
+    title: "Memory Management Part 3",
+    mc: [
+      {q:"What is Virtual Memory?",opts:["Physical memory installed in a computer","A technique that allows programs to run even when only partially in main memory","Memory stored on disk permanently","Cache memory in the CPU"],ans:1},
+      {q:"What were early solutions to programs too big to fit in memory called?",opts:["Segments","Overlays","Pages","Frames"],ans:1},
+      {q:"What is Paging?",opts:["Storing processes entirely on disk","Dividing virtual address space into units called pages mapped to page frames in physical memory","Compacting memory holes into one","Allocating fixed partitions to processes"],ans:1},
+      {q:"What is an MMU?",opts:["Main Memory Unit","Memory Management Unit that maps virtual to physical addresses","Multiple Memory Utility","Maximum Memory Usage"],ans:1},
+      {q:"In the paging example with 16-bit addresses and 4KB pages, how many virtual pages are there?",opts:["8","12","16","32"],ans:2},
+      {q:"What is a Page Fault?",opts:["A hardware malfunction in RAM","A trap to the OS when a program accesses an unmapped page","A full page table","An error in the page size calculation"],ans:1},
+      {q:"What happens when the OS handles a page fault?",opts:["The process is terminated","A little-used page frame is written to disk and the referenced page is loaded","The program restarts from the beginning","More physical memory is installed"],ans:1},
+      {q:"The present/absent bit in a page table entry being 0 means:",opts:["The page is in physical memory","The page is not currently in physical memory","The page is read-only","The page is being modified"],ans:1},
+      {q:"What is the 'dirty bit' in a page table entry?",opts:["A bit indicating a hardware error","The modified bit, indicating the page has been written to","A bit for page protection","The referenced bit"],ans:1},
+      {q:"In a 16-bit virtual address with 4-bit page number and 12-bit offset, how many bytes can be addressed within one page?",opts:["256","1024","4096","65536"],ans:2},
+      {q:"What does the Referenced bit in a page table entry track?",opts:["Whether the page has been modified","Whether the page has been accessed (read or written)","Whether the page is in memory","Whether caching is enabled"],ans:1},
+      {q:"The Cache Disable bit in a page table is important for pages that map onto:",opts:["Regular memory","Device registers","Network buffers","Stack memory"],ans:1},
+      {q:"What are the two major issues with page tables?",opts:["Page size and page number","The page table can be extremely large and the mapping must be fast","Virtual address size and physical address size","Page faults and dirty bits"],ans:1},
+      {q:"With a 32-bit address space and 4KB page size, how many page table entries are needed?",opts:["1 thousand","1 million","1 billion","4 million"],ans:1},
+      {q:"Transfers between RAM and disk in paging always occur in units of:",opts:["Bytes","Sectors","A page","A segment"],ans:2},
+    ],
+    tf: [
+      {q:"Virtual memory allows a 512-MB program to run on a 256-MB machine.",ans:true},
+      {q:"Pages and page frames are always the same size.",ans:true},
+      {q:"A page fault occurs when a program accesses a page that is currently mapped in memory.",ans:false},
+      {q:"The dirty bit is set when a page is written to.",ans:true},
+      {q:"The MMU maps virtual addresses directly onto the memory bus without translation.",ans:false},
+      {q:"The present/absent bit being 0 causes a page fault trap to the OS.",ans:true},
+      {q:"The referenced bit helps the OS choose which page to evict during a page fault.",ans:true},
+      {q:"The cache disable bit is useful for pages that map onto device registers.",ans:true},
+      {q:"In paging, the virtual page number is used as an index into the page table.",ans:true},
+      {q:"With a 64-bit address space and 4KB pages, the number of page table entries is manageable without special techniques.",ans:false},
+    ]
+  }
+];
+
+// State per lecture
+const state = lectures.map(l => ({
+  mcAnswered: {},
+  tfAnswers: {},
+  mcScores: 0,
+  tfScores: 0,
+  submitted: false
+}));
+
+let activeLec = 0;
+
+function totalForLec(li) {
+  return lectures[li].mc.length + lectures[li].tf.length;
+}
+
+function answeredForLec(li) {
+  return Object.keys(state[li].mcAnswered).length + Object.keys(state[li].tfAnswers).length;
+}
+
+function updateProgress() {
+  const total = totalForLec(activeLec);
+  const answered = answeredForLec(activeLec);
+  const pct = total > 0 ? Math.round(answered / total * 100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = answered + ' / ' + total + ' answered — Lecture ' + activeLec;
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function getGrade(pct) {
+  if(pct>=90) return 'A+'; if(pct>=85) return 'A'; if(pct>=80) return 'B+';
+  if(pct>=75) return 'B'; if(pct>=70) return 'C+'; if(pct>=65) return 'C';
+  if(pct>=60) return 'D+'; if(pct>=50) return 'D'; return 'F';
+}
+
+function revealMC(li, qi) {
+  const item = lectures[li].mc[qi];
+  const chosen = state[li].mcAnswered[qi];
+  const card = document.getElementById(`l${li}-mc-card-${qi}`);
+  item.opts.forEach((_,j) => {
+    const opt = document.getElementById(`l${li}-mc-opt-${qi}-${j}`);
+    opt.style.pointerEvents = 'none';
+    if(j === item.ans) opt.classList.add('correct-opt');
+    else if(j === chosen && chosen !== item.ans) { opt.classList.add('wrong-opt'); opt.classList.remove('selected'); }
+  });
+  const fb = document.getElementById(`l${li}-mc-fb-${qi}`);
+  if(chosen === item.ans) {
+    state[li].mcScores++;
+    card.classList.add('correct-card');
+    fb.textContent = '✓ Correct!'; fb.className = 'q-feedback show-correct';
+  } else {
+    card.classList.add('wrong-card');
+    fb.textContent = '✗ Incorrect — correct: ' + letters[item.ans] + ') ' + item.opts[item.ans];
+    fb.className = 'q-feedback show-wrong';
+  }
+  updateScoreCard(li);
+}
+
+function revealTF(li, i) {
+  const item = lectures[li].tf[i];
+  const chosen = state[li].tfAnswers[i];
+  const card = document.getElementById(`l${li}-tf-card-${i}`);
+  const tBtn = document.getElementById(`l${li}-tf-t-${i}`);
+  const fBtn = document.getElementById(`l${li}-tf-f-${i}`);
+  tBtn.style.pointerEvents = 'none'; fBtn.style.pointerEvents = 'none';
+  const correctBtn = item.ans ? tBtn : fBtn;
+  correctBtn.classList.add('correct-tf');
+  if(chosen !== item.ans) (chosen ? tBtn : fBtn).classList.add('wrong-tf');
+  const fb = document.getElementById(`l${li}-tf-fb-${i}`);
+  if(chosen === item.ans) {
+    state[li].tfScores++;
+    card.classList.add('correct-card');
+    fb.textContent = '✓ Correct!'; fb.className = 'q-feedback show-correct';
+  } else {
+    card.classList.add('wrong-card');
+    fb.textContent = '✗ Incorrect — correct: ' + (item.ans ? 'True' : 'False');
+    fb.className = 'q-feedback show-wrong';
+  }
+  updateScoreCard(li);
+}
+
+function selectMC(li, qi, oi) {
+  if(state[li].mcAnswered[qi] !== undefined) return;
+  state[li].mcAnswered[qi] = oi;
+  document.getElementById(`l${li}-mc-opt-${qi}-${oi}`).classList.add('selected');
+  document.getElementById(`l${li}-mc-card-${qi}`).classList.add('answered');
+  updateProgress();
+  revealMC(li, qi);
+}
+
+function selectTF(li, i, val) {
+  if(state[li].tfAnswers[i] !== undefined) return;
+  state[li].tfAnswers[i] = val;
+  document.getElementById(`l${li}-tf-${val ? 't' : 'f'}-${i}`).classList.add('selected');
+  document.getElementById(`l${li}-tf-card-${i}`).classList.add('answered');
+  updateProgress();
+  revealTF(li, i);
+}
+
+function updateScoreCard(li) {
+  const total = totalForLec(li);
+  const answered = answeredForLec(li);
+  const totalCorrect = state[li].mcScores + state[li].tfScores;
+  const pct = answered > 0 ? Math.round(totalCorrect / answered * 100) : 0;
+  const sc = document.getElementById(`l${li}-score`);
+  sc.style.display = 'block';
+  document.getElementById(`l${li}-sc-pct`).textContent = pct + '%';
+  document.getElementById(`l${li}-sc-sub`).textContent = totalCorrect + ' correct out of ' + answered + ' answered';
+  document.getElementById(`l${li}-sc-grade`).textContent = getGrade(pct);
+  const mcAns = Object.keys(state[li].mcAnswered).length;
+  const tfAns = Object.keys(state[li].tfAnswers).length;
+  document.getElementById(`l${li}-sc-mc`).textContent = state[li].mcScores + ' / ' + mcAns;
+  document.getElementById(`l${li}-sc-mc-pct`).textContent = mcAns > 0 ? Math.round(state[li].mcScores/mcAns*100) + '% accuracy' : '—';
+  document.getElementById(`l${li}-sc-tf`).textContent = state[li].tfScores + ' / ' + tfAns;
+  document.getElementById(`l${li}-sc-tf-pct`).textContent = tfAns > 0 ? Math.round(state[li].tfScores/tfAns*100) + '% accuracy' : '—';
+  document.getElementById(`l${li}-sc-skip`).textContent = total - answered;
+}
+
+function resetLecture(li) {
+  state[li].mcAnswered = {}; state[li].tfAnswers = {};
+  state[li].mcScores = 0; state[li].tfScores = 0;
+  buildLecture(li);
+  updateProgress();
+}
+
+function scrollToScore(li) {
+  document.getElementById(`l${li}-score`).scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function buildLecture(li) {
+  const lec = lectures[li];
+  const container = document.getElementById(`lec-${li}-content`);
+  container.innerHTML = '';
+
+  // MC section
+  const mcHeader = document.createElement('div');
+  mcHeader.className = 'section-header';
+  mcHeader.innerHTML = `<div class="section-icon mc">MC</div><div><div class="section-title">Multiple Choice</div><div class="section-meta">${lec.mc.length} questions — select the best answer</div></div>`;
+  container.appendChild(mcHeader);
+
+  lec.mc.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card'; card.id = `l${li}-mc-card-${i}`;
+    const opts = item.opts.map((o,j) => `
+      <label class="option" id="l${li}-mc-opt-${i}-${j}" onclick="selectMC(${li},${i},${j})">
+        <input type="radio" name="l${li}-mc-${i}" value="${j}">
+        <div class="option-dot"></div>
+        <span class="option-letter">${letters[j]})</span>
+        <span class="option-text">${o}</span>
+      </label>`).join('');
+    card.innerHTML = `<div class="q-header"><span class="q-badge">${i+1}</span><span class="q-text">${item.q}</span></div><div class="options">${opts}</div><div class="q-feedback" id="l${li}-mc-fb-${i}"></div>`;
+    container.appendChild(card);
+  });
+
+  // Divider
+  const div = document.createElement('div'); div.className = 'divider';
+  container.appendChild(div);
+
+  // TF section
+  const tfHeader = document.createElement('div');
+  tfHeader.className = 'section-header';
+  tfHeader.innerHTML = `<div class="section-icon tf">T/F</div><div><div class="section-title">True or False</div><div class="section-meta">${lec.tf.length} questions</div></div>`;
+  container.appendChild(tfHeader);
+
+  lec.tf.forEach((item, i) => {
+    const n = i + 1;
+    const card = document.createElement('div');
+    card.className = 'q-card'; card.id = `l${li}-tf-card-${i}`;
+    card.innerHTML = `<div class="q-header"><span class="q-badge">${n}</span><span class="q-text">${item.q}</span></div>
+      <div class="tf-wrap">
+        <button class="tf-btn" id="l${li}-tf-t-${i}" onclick="selectTF(${li},${i},true)"><div class="tf-dot"></div>True</button>
+        <button class="tf-btn" id="l${li}-tf-f-${i}" onclick="selectTF(${li},${i},false)"><div class="tf-dot"></div>False</button>
+      </div>
+      <div class="q-feedback" id="l${li}-tf-fb-${i}"></div>`;
+    container.appendChild(card);
+  });
+
+  // Actions
+  const actions = document.createElement('div');
+  actions.className = 'actions';
+  actions.innerHTML = `<button class="btn-primary" onclick="scrollToScore(${li})">View Score</button><button class="btn-secondary" onclick="resetLecture(${li})">Reset</button>`;
+  container.appendChild(actions);
+
+  // Score card
+  const sc = document.createElement('div');
+  sc.className = 'score-card'; sc.id = `l${li}-score`;
+  sc.innerHTML = `<div class="score-card-inner">
+    <div class="score-top">
+      <div><div class="score-label">Score</div><div class="score-big" id="l${li}-sc-pct">—</div><div class="score-sub" id="l${li}-sc-sub">—</div></div>
+      <div style="text-align:right"><div class="score-label">Grade</div><div class="score-grade" id="l${li}-sc-grade">—</div></div>
+    </div>
+    <div class="score-breakdown">
+      <div class="score-section"><div class="score-section-label">Multiple Choice</div><div class="score-section-val" id="l${li}-sc-mc">—</div><div class="score-section-pct" id="l${li}-sc-mc-pct">—</div></div>
+      <div class="score-section"><div class="score-section-label">True / False</div><div class="score-section-val" id="l${li}-sc-tf">—</div><div class="score-section-pct" id="l${li}-sc-tf-pct">—</div></div>
+      <div class="score-section"><div class="score-section-label">Remaining</div><div class="score-section-val" id="l${li}-sc-skip">—</div><div class="score-section-pct" style="color:rgba(255,255,255,.35)">not yet answered</div></div>
+    </div>
+  </div>`;
+  container.appendChild(sc);
+}
+
+function buildNav() {
+  const tabs = document.getElementById('lec-tabs');
+  const main = document.getElementById('main-content');
+  lectures.forEach((lec, li) => {
+    // Tab
+    const tab = document.createElement('button');
+    tab.className = 'lec-tab' + (li === 0 ? ' active' : '');
+    tab.textContent = 'Lec ' + li;
+    tab.onclick = () => switchLecture(li);
+    tab.id = `tab-${li}`;
+    tabs.appendChild(tab);
+
+    // Section
+    const section = document.createElement('div');
+    section.className = 'lec-section' + (li === 0 ? ' active' : '');
+    section.id = `lec-section-${li}`;
+    const total = lec.mc.length + lec.tf.length;
+    section.innerHTML = `
+      <div class="lec-header">
+        <div class="lec-num">Lecture ${li}</div>
+        <div class="lec-title">${lec.title}</div>
+        <div class="lec-stats">
+          <span class="lec-stat">${total} total questions</span>
+          <span class="lec-stat">${lec.mc.length} multiple choice</span>
+          <span class="lec-stat">${lec.tf.length} true / false</span>
+        </div>
+      </div>
+      <div id="lec-${li}-content"></div>`;
+    main.appendChild(section);
+
+    buildLecture(li);
+  });
+}
+
+function switchLecture(li) {
+  document.getElementById(`lec-section-${activeLec}`).classList.remove('active');
+  document.getElementById(`tab-${activeLec}`).classList.remove('active');
+  activeLec = li;
+  document.getElementById(`lec-section-${li}`).classList.add('active');
+  document.getElementById(`tab-${li}`).classList.add('active');
+  updateProgress();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('scroll-btn').classList.toggle('visible', window.scrollY > 400);
+});
+
+buildNav();
+updateProgress();
+</script>
+</body>
+</html>
